@@ -1,0 +1,49 @@
+<div class="row">
+        <div class="col-sm-4">
+            <a href=""><h2>Hacker News, Newest!</h2></a>
+        </div>
+        <div class="search col-sm-4">
+            <label for="search">Search </label>
+            <input type="text" id="search" [(ngModel)]="search">
+            <button (click)="runSearch()">Search</button>
+        </div>
+</div>
+<hr>
+
+<div class="search-waiting" *ngIf="!showResults">
+    <h3>{{displayText}}</h3>
+</div>
+
+<div *ngIf="showResults">
+    <div class="col-sm-8">
+        <mat-list *ngFor="let item of hackerList; let i = index">
+            <div class="row">
+                <mat-list-item>
+                    <h4>
+                        {{i+1+(currentPage*pageSize)}}. <a href={{item.url}}>Title: {{item.title}}</a>
+                    </h4>
+                </mat-list-item>
+            </div>
+            <div class="row">
+                <mat-list-item>
+                    <div class="col-sm-2">
+                        <h6>
+                            User: {{item.by}}
+                        </h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <h6>
+                            Score: {{item.score}}
+                        </h6>
+                    </div>
+                </mat-list-item>
+            </div>
+            <mat-divider></mat-divider>
+        </mat-list>
+    </div>
+
+    <div *ngIf="!searchResultsDisplaying" class="col-sm-5">
+        <mat-paginator [length]="totalItems" [pageSize]="pageSize" (page)="getNewPage($event)" aria-label="Select page">
+        </mat-paginator>
+    </div>
+</div>
